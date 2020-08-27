@@ -14,6 +14,9 @@ export class OkHiException extends Error {
   static UNAUTHORIZED_MESSAGE = 'Invalid credentials provided';
   static PERMISSION_DENIED_CODE = 'permission_denied';
   static SERVICE_UNAVAILABLE_CODE = 'service_unavailable';
+  static UNSUPPORTED_PLATFORM_CODE = 'unsupported_platform';
+  static UNSUPPORTED_PLATFORM_MESSAGE =
+    'OkHi methods currently support Android devices only';
 
   code: string;
   constructor(error: OkHiError) {
