@@ -6,4 +6,9 @@ type ReactNativeCoreType = {
 
 const { ReactNativeCore } = NativeModules;
 
+export * from './types';
+export * from './OkHiAuth';
+export * from './OkHiContext';
+export * from './OkHiException';
+export * from './OkHiMode';
 export default ReactNativeCore as ReactNativeCoreType;
