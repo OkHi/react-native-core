@@ -11,4 +11,5 @@ export * from './OkHiAuth';
 export * from './OkHiContext';
 export * from './OkHiException';
 export * from './OkHiMode';
+export * from './OkHiCore';
 export default ReactNativeCore as ReactNativeCoreType;
