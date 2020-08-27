@@ -7,6 +7,8 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 
+import io.okhi.android_core.OkHi;
+
 public class ReactNativeCoreModule extends ReactContextBaseJavaModule {
   public ReactNativeCoreModule(ReactApplicationContext reactContext) {
     super(reactContext);
@@ -20,6 +22,6 @@ public class ReactNativeCoreModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void isLocationPermissionGranted(Promise promise) {
-    promise.resolve(true);
+    promise.resolve(OkHi.isLocationPermissionGranted(getReactApplicationContext()));
   }
 }
