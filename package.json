@@ -137,5 +137,8 @@
       "module",
       "typescript"
     ]
+  },
+  "dependencies": {
+    "js-base64": "^3.4.5"
   }
 }
