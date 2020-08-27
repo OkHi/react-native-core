@@ -4,7 +4,9 @@ import ReactNativeCore, {
   OkHiContext,
   OkHiMode,
   OkHiAuth,
+  OkHiCore,
 } from '@okhi/react-native-core';
+import secret from './secret';
 
 export default function App() {
   const [result, setResult] = React.useState<number | undefined>();
@@ -13,6 +15,7 @@ export default function App() {
     ReactNativeCore.multiply(3, 7).then(setResult);
   }, []);
 
+  // define context first
   const context = new OkHiContext({
     mode: OkHiMode.SANDBOX,
     app: {
@@ -22,13 +25,26 @@ export default function App() {
     },
   });
 
+  // create auth with or without context
   const auth = OkHiAuth.withContext(
     {
-      branchId: 'xyz',
-      clientKey: 'abc',
+      branchId: secret.branchId,
+      clientKey: secret.clientKey,
     },
     context
   );
+
+  const core = new OkHiCore(auth);
+
+  core
+    .anonymousSignInWithPhoneNumber(secret.phone, ['address'])
+    .then(console.log)
+    .catch(console.log);
+
+  core
+    .anonymousSignInWithUserId('5kCVI3G6AO', ['verify'])
+    .then(console.log)
+    .catch(console.log);
 
   return (
     <View style={styles.container}>
