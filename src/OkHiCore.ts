@@ -26,7 +26,7 @@ export class OkHiCore {
     }
   }
 
-  anonymousSignInWithPhoneNumber(
+  protected anonymousSignInWithPhoneNumber(
     phone: string,
     scopes: Array<OkHiAccessScope>
   ) {
@@ -36,7 +36,10 @@ export class OkHiCore {
     });
   }
 
-  anonymousSignInWithUserId(userId: string, scopes: Array<OkHiAccessScope>) {
+  protected anonymousSignInWithUserId(
+    userId: string,
+    scopes: Array<OkHiAccessScope>
+  ) {
     return this.anonymousSignIn({
       scopes,
       user_id: userId,

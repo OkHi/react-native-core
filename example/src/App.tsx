@@ -4,9 +4,8 @@ import ReactNativeCore, {
   OkHiContext,
   OkHiMode,
   OkHiAuth,
-  OkHiCore,
 } from '@okhi/react-native-core';
-import secret from './secret';
+import secret, { Core } from './secret';
 
 export default function App() {
   const [result, setResult] = React.useState<number | undefined>();
@@ -34,17 +33,11 @@ export default function App() {
     context
   );
 
-  const core = new OkHiCore(auth);
+  const core = new Core(auth);
 
-  core
-    .anonymousSignInWithPhoneNumber(secret.phone, ['address'])
-    .then(console.log)
-    .catch(console.log);
+  core.signInWithPhone(secret.phone).then(console.log).catch(console.log);
 
-  core
-    .anonymousSignInWithUserId('5kCVI3G6AO', ['verify'])
-    .then(console.log)
-    .catch(console.log);
+  core.signInWithUserId(secret.userId).then(console.log).catch(console.log);
 
   return (
     <View style={styles.container}>
