@@ -50,45 +50,38 @@ export class OkHiCore {
     scopes: Array<OkHiAccessScope>;
     [key: string]: any;
   }): Promise<string> {
-    let token = '';
-    try {
+    return new Promise(async (resolve, reject) => {
       const headers = { Authorization: this.auth.getAccessToken() };
-      const { data } = await axios.post<{ authorization_token: string }>(
-        this.URL,
-        payload,
-        { headers }
-      );
-      if (data.authorization_token) {
-        token = data.authorization_token;
-      } else {
-        throw new Error('missing authorization_token from API response');
-      }
-    } catch (error) {
-      this.parseRequestError(error);
-    }
-    return token;
+      axios
+        .post<{ authorization_token: string }>(this.URL, payload, {
+          headers,
+        })
+        .then(({ data }) => resolve(data.authorization_token))
+        .catch((error) => reject(this.parseRequestError(error)));
+    });
   }
 
   private parseRequestError(error: any) {
+    console.log(error);
     if (!error.response) {
-      throw new OkHiException({
+      return new OkHiException({
         code: OkHiException.NETWORK_ERROR_CODE,
         message: OkHiException.NETWORK_ERROR_MESSAGE,
       });
     }
     switch (error.response.status) {
       case 400:
-        throw new OkHiException({
+        return new OkHiException({
           code: OkHiException.INVALID_PHONE_CODE,
           message: OkHiException.INVALID_PHONE_MESSAGE,
         });
       case 401:
-        throw new OkHiException({
+        return new OkHiException({
           code: OkHiException.UNAUTHORIZED_CODE,
           message: OkHiException.UNAUTHORIZED_MESSAGE,
         });
       default:
-        throw new OkHiException({
+        return new OkHiException({
           code: OkHiException.UNKNOWN_ERROR_CODE,
           message: error.message || OkHiException.UNKNOWN_ERROR_MESSAGE,
         });
