@@ -1,6 +1,6 @@
 {
   "name": "@okhi/react-native-core",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Core package for the OkHi react native suite of libraries",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -137,5 +137,9 @@
       "module",
       "typescript"
     ]
+  },
+  "dependencies": {
+    "axios": "^0.20.0",
+    "js-base64": "^3.4.5"
   }
 }
