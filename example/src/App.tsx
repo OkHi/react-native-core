@@ -1,19 +1,19 @@
 import * as React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import ReactNativeCore, {
+import { StyleSheet, View, Button } from 'react-native';
+import {
   OkHiContext,
   OkHiMode,
   OkHiAuth,
+  isGooglePlayServicesAvailable,
+  isLocationPermissionGranted,
+  isLocationServicesEnabled,
+  requestEnableGooglePlayServices,
+  requestEnableLocationServices,
+  requestLocationPermission,
 } from '@okhi/react-native-core';
 import secret, { Core } from './secret';
 
-export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
-
-  React.useEffect(() => {
-    ReactNativeCore.multiply(3, 7).then(setResult);
-  }, []);
-
+function signIn() {
   // define context first
   const context = new OkHiContext({
     mode: OkHiMode.SANDBOX,
@@ -23,7 +23,6 @@ export default function App() {
       build: 1,
     },
   });
-
   // create auth with or without context
   const auth = OkHiAuth.withContext(
     {
@@ -32,17 +31,44 @@ export default function App() {
     },
     context
   );
-
   const core = new Core(auth);
+  try {
+    core.signInWithPhone(secret.phone).then(console.log).catch(console.log);
+    core.signInWithUserId(secret.userId).then(console.log).catch(console.log);
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-  core.signInWithPhone(secret.phone).then(console.log).catch(console.log);
+async function checkPermissions() {
+  if (!(await isGooglePlayServicesAvailable())) {
+    const hasPlayServices = await requestEnableGooglePlayServices();
+    console.log('hasPlayServices', hasPlayServices);
+  }
 
-  core.signInWithUserId(secret.userId).then(console.log).catch(console.log);
+  if (!(await isLocationPermissionGranted())) {
+    const hasPermission = await requestLocationPermission({
+      buttonPositive: 'GRANT',
+      buttonNegative: 'DENY',
+      buttonNeutral: 'CANCEL',
+      title: 'Please grant permissions',
+      message: 'We need location permissions',
+    });
+    console.log('hasPermission', hasPermission);
+  }
 
+  if (!(await isLocationServicesEnabled())) {
+    const hasLocationServices = await requestEnableLocationServices();
+    console.log('hasLocationServices', hasLocationServices);
+  }
+  console.log('DONE');
+}
+
+export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
-      <Text>Result: {auth.getAccessToken()}</Text>
+      <Button title="Sign In" onPress={() => signIn()} />
+      <Button title="Check permissions" onPress={() => checkPermissions()} />
     </View>
   );
 }
