@@ -62,7 +62,6 @@ export class OkHiCore {
   }
 
   private parseRequestError(error: any) {
-    console.log(error);
     if (!error.response) {
       return new OkHiException({
         code: OkHiException.NETWORK_ERROR_CODE,
