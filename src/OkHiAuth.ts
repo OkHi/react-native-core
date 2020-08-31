@@ -33,4 +33,12 @@ export class OkHiAuth {
       btoa(`${this.credentials.branchId}:${this.credentials.clientKey}`)
     );
   }
+
+  getBranchId() {
+    return this.credentials.branchId;
+  }
+
+  getClientKey() {
+    return this.credentials.clientKey;
+  }
 }
