@@ -17,6 +17,8 @@ export class OkHiException extends Error {
   static UNSUPPORTED_PLATFORM_CODE = 'unsupported_platform';
   static UNSUPPORTED_PLATFORM_MESSAGE =
     'OkHi methods currently support Android devices only';
+  static BAD_REQUEST_CODE = 'bad_request';
+  static BAD_REQUEST_MESSAGE = 'Invalid parameters provided';
 
   code: string;
   constructor(error: OkHiError) {
