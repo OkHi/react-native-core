@@ -4,25 +4,26 @@ import type { OkHiAccessScope } from './types';
 import { OkHiMode } from './OkHiMode';
 import { OkHiException } from './OkHiException';
 
-const API_VERSION = 'v5';
-const ANONYMOUS_SIGN_IN_ENDPOINT = '/auth/anonymous-signin';
-const DEV_BASE_URL =
-  `https://dev-api.okhi.io/${API_VERSION}` + ANONYMOUS_SIGN_IN_ENDPOINT;
-const SANDBOX_BASE_URL =
-  `https://sandbox-api.okhi.io/${API_VERSION}` + ANONYMOUS_SIGN_IN_ENDPOINT;
-const PROD_BASE_URL =
-  `https://api.okhi.io/${API_VERSION}` + ANONYMOUS_SIGN_IN_ENDPOINT;
-
 export class OkHiCore {
+  private readonly API_VERSION = 'v5';
+  private readonly ANONYMOUS_SIGN_IN_ENDPOINT = '/auth/anonymous-signin';
+  private readonly DEV_BASE_URL =
+    `https://dev-api.okhi.io/${this.API_VERSION}` +
+    this.ANONYMOUS_SIGN_IN_ENDPOINT;
+  private readonly SANDBOX_BASE_URL =
+    `https://sandbox-api.okhi.io/${this.API_VERSION}` +
+    this.ANONYMOUS_SIGN_IN_ENDPOINT;
+  private readonly PROD_BASE_URL =
+    `https://api.okhi.io/${this.API_VERSION}` + this.ANONYMOUS_SIGN_IN_ENDPOINT;
   private URL: string;
 
   constructor(private readonly auth: OkHiAuth) {
     if (auth.getContext().getMode() === 'dev') {
-      this.URL = DEV_BASE_URL;
+      this.URL = this.DEV_BASE_URL;
     } else if (auth.getContext().getMode() === OkHiMode.PROD) {
-      this.URL = PROD_BASE_URL;
+      this.URL = this.PROD_BASE_URL;
     } else {
-      this.URL = SANDBOX_BASE_URL;
+      this.URL = this.SANDBOX_BASE_URL;
     }
   }
 
