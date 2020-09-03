@@ -1,0 +1,239 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@okhi/react-native-core</title>
+	<meta name="description" content="Documentation for @okhi/react-native-core">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">@okhi/react-native-core</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1>@okhi/react-native-core</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#okhireact-native-core" id="okhireact-native-core" style="color: inherit; text-decoration: none;">
+					<h1>@okhi/react-native-core</h1>
+				</a>
+				<p>Core package for the OkHi react native suite of libraries</p>
+				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+					<h2>Installation</h2>
+				</a>
+				<pre><code class="language-sh">npm install @okhi/react-native-core</code></pre>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
+				<pre><code class="language-js"><span class="hljs-keyword">import</span> {
+  OkHiContext,
+  OkHiMode,
+  OkHiAuth,
+  isGooglePlayServicesAvailable,
+  isLocationPermissionGranted,
+  isLocationServicesEnabled,
+  requestEnableGooglePlayServices,
+  requestEnableLocationServices,
+  requestLocationPermission,
+} <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@okhi/react-native-core&#x27;</span>;
+
+<span class="hljs-comment">// define context first</span>
+<span class="hljs-keyword">const</span> context = <span class="hljs-keyword">new</span> OkHiContext({
+  <span class="hljs-attr">mode</span>: OkHiMode.SANDBOX,
+  <span class="hljs-attr">app</span>: {
+    <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;My Demo app&#x27;</span>,
+    <span class="hljs-attr">version</span>: <span class="hljs-string">&#x27;1.0.0&#x27;</span>,
+    <span class="hljs-attr">build</span>: <span class="hljs-number">1</span>,
+  },
+});
+
+<span class="hljs-comment">// create auth with or without context. Use the auth object with either OkVerify or OkCollect libraries</span>
+<span class="hljs-keyword">const</span> auth = OkHiAuth.withContext(
+  {
+    <span class="hljs-attr">branchId</span>: <span class="hljs-string">&#x27;&lt;my_branch_id&gt;&#x27;</span>,
+    <span class="hljs-attr">clientKey</span>: <span class="hljs-string">&#x27;&lt;my_clientKey_id&gt;&#x27;</span>,
+  },
+  context
+);
+
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">checkPermissions</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">if</span> (!(<span class="hljs-keyword">await</span> isGooglePlayServicesAvailable())) {
+    <span class="hljs-keyword">await</span> requestEnableGooglePlayServices(); <span class="hljs-comment">// resolves true | false</span>
+  }
+
+  <span class="hljs-keyword">if</span> (!(<span class="hljs-keyword">await</span> isLocationPermissionGranted())) {
+    <span class="hljs-keyword">await</span> requestLocationPermission({
+      <span class="hljs-attr">buttonPositive</span>: <span class="hljs-string">&#x27;GRANT&#x27;</span>,
+      <span class="hljs-attr">buttonNegative</span>: <span class="hljs-string">&#x27;DENY&#x27;</span>,
+      <span class="hljs-attr">buttonNeutral</span>: <span class="hljs-string">&#x27;CANCEL&#x27;</span>,
+      <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;Location permission required&#x27;</span>,
+      <span class="hljs-attr">message</span>:
+        <span class="hljs-string">&#x27;OkHi needs your location permission to create and cerify your address&#x27;</span>,
+    }); <span class="hljs-comment">// resolves true | false</span>
+  }
+
+  <span class="hljs-keyword">if</span> (!(<span class="hljs-keyword">await</span> isLocationServicesEnabled())) {
+    <span class="hljs-keyword">await</span> requestEnableLocationServices(); <span class="hljs-comment">// resolves true | false</span>
+  }
+}</code></pre>
+				<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
+					<h2>Contributing</h2>
+				</a>
+				<p>See the <a href="CONTRIBUTING.md">contributing guide</a> to learn how to contribute to the repository and the development workflow.</p>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h2>License</h2>
+				</a>
+				<p>MIT</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-class">
+						<a href="classes/okhiauth.html" class="tsd-kind-icon">Ok<wbr>HiAuth</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/okhicontext.html" class="tsd-kind-icon">Ok<wbr>HiContext</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/okhicore.html" class="tsd-kind-icon">Ok<wbr>HiCore</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/okhiexception.html" class="tsd-kind-icon">Ok<wbr>HiException</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/okhiappcontext.html" class="tsd-kind-icon">Ok<wbr>HiApp<wbr>Context</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/okhierror.html" class="tsd-kind-icon">Ok<wbr>HiError</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/okhilocation.html" class="tsd-kind-icon">Ok<wbr>HiLocation</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/okhiuser.html" class="tsd-kind-icon">Ok<wbr>HiUser</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#okhiaccessscope" class="tsd-kind-icon">Ok<wbr>HiAccess<wbr>Scope</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#reactnativecoretype" class="tsd-kind-icon">React<wbr>Native<wbr>Core<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#okhimode" class="tsd-kind-icon">Ok<wbr>HiMode</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#reactnativecore" class="tsd-kind-icon">React<wbr>Native<wbr>Core</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#isgoogleplayservicesavailable" class="tsd-kind-icon">is<wbr>Google<wbr>Play<wbr>Services<wbr>Available</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#islocationpermissiongranted" class="tsd-kind-icon">is<wbr>Location<wbr>Permission<wbr>Granted</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#islocationservicesenabled" class="tsd-kind-icon">is<wbr>Location<wbr>Services<wbr>Enabled</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#openlocationservicessettings" class="tsd-kind-icon">open<wbr>Location<wbr>Services<wbr>Settings</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#requestenablegoogleplayservices" class="tsd-kind-icon">request<wbr>Enable<wbr>Google<wbr>Play<wbr>Services</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#requestenablelocationservices" class="tsd-kind-icon">request<wbr>Enable<wbr>Location<wbr>Services</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#requestlocationpermission" class="tsd-kind-icon">request<wbr>Location<wbr>Permission</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
