@@ -31,6 +31,8 @@ export interface OkHiLocation {
   streetViewPanoId?: string;
   streetViewPanoUrl?: string;
   userId?: string;
+  propertyNumber?: string;
+  photo?: string;
 }
 
 export interface OkHiError {
