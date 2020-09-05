@@ -64,6 +64,14 @@ async function checkPermissions() {
 }
 ```
 
+## Documentation
+
+- [Guides](https://docs.okhi.co/v/v5.0-alpha/okhi-on-your-react-native-app)
+
+- [Best Practices](https://docs.google.com/document/d/1kxolQJ4n6tEgReuqVLYpDVMW--xvqv5UQ7AdvrN0Uw0)
+
+- [API Reference](https://okhi.github.io/react-native-core/)
+
 ## Contributing
 
 See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
