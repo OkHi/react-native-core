@@ -13,6 +13,9 @@ export * from './OkHiException';
 export * from './OkHiMode';
 export * from './OkHiCore';
 
+/**
+ * @ignore
+ */
 type ReactNativeCoreType = {
   isLocationPermissionGranted(): Promise<boolean>;
   isLocationServicesEnabled(): Promise<boolean>;
@@ -22,8 +25,15 @@ type ReactNativeCoreType = {
   requestEnableGooglePlayServices(): Promise<boolean>;
 };
 
+/**
+ * @ignore
+ */
 const ReactNativeCore: ReactNativeCoreType = NativeModules.ReactNativeCore;
 
+/**
+ * Checks whether location permission is granted.
+ * @return {Promise<boolean>} A promise that resolves to a boolean value indicating whether or not the permission is granted.
+ */
 export const isLocationPermissionGranted = (): Promise<boolean> => {
   return new Promise((resolve, reject) => {
     if (Platform.OS !== 'android') {
@@ -47,6 +57,10 @@ export const isLocationPermissionGranted = (): Promise<boolean> => {
   });
 };
 
+/**
+ * Checks whether location services are available and turned on.
+ * @return {Promise<boolean>} A promise that resolves to a boolean value indicating whether or not the the service is available.
+ */
 export const isLocationServicesEnabled = (): Promise<boolean> => {
   return new Promise((resolve, reject) => {
     if (Platform.OS !== 'android') {
@@ -70,6 +84,10 @@ export const isLocationServicesEnabled = (): Promise<boolean> => {
   });
 };
 
+/**
+ * Checks whether Google Play Service is available and turned on.
+ * @return {Promise<boolean>} A promise that resolves to a boolean value indicating whether or not the the service is available.
+ */
 export const isGooglePlayServicesAvailable = (): Promise<boolean> => {
   return new Promise((resolve, reject) => {
     if (Platform.OS !== 'android') {
@@ -93,6 +111,10 @@ export const isGooglePlayServicesAvailable = (): Promise<boolean> => {
   });
 };
 
+/**
+ * Launches the user's devices location settings, enabling them to turn on location services.
+ * @return {Promise<void>}
+ */
 export const openLocationServicesSettings = (): Promise<void> => {
   return new Promise((_, reject) => {
     if (Platform.OS !== 'android') {
@@ -107,6 +129,10 @@ export const openLocationServicesSettings = (): Promise<void> => {
   });
 };
 
+/**
+ * Displays an in app native modal, that prompts the user to enable location services.
+ * @return {Promise<boolean>} A promise that resolves to a boolean value indicating whether or not the the service is available.
+ */
 export const requestEnableLocationServices = (): Promise<boolean> => {
   return new Promise((resolve, reject) => {
     if (Platform.OS !== 'android') {
@@ -130,6 +156,10 @@ export const requestEnableLocationServices = (): Promise<boolean> => {
   });
 };
 
+/**
+ * Launches the device's Google Play Services settings, prompting the user to enable the service.
+ * @return {Promise<boolean>} A promise that resolves to a boolean value indicating whether or not the the service is available.
+ */
 export const requestEnableGooglePlayServices = (): Promise<boolean> => {
   return new Promise((resolve, reject) => {
     if (Platform.OS !== 'android') {
@@ -153,6 +183,12 @@ export const requestEnableGooglePlayServices = (): Promise<boolean> => {
   });
 };
 
+/**
+ * Requests location permission from the user.
+ * Uses a this rationale object that is used to check with the OS whether it is necessary to show a dialog explaining why the permission is needed.
+ * See: https://reactnative.dev/docs/permissionsandroid#request
+ * @return {Promise<boolean>} A promise that resolves to a boolean value indicating whether or not the the permission is granted.
+ */
 export const requestLocationPermission = (
   rationale: Rationale
 ): Promise<boolean> => {
