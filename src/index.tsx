@@ -26,11 +26,11 @@ type ReactNativeCoreType = {
 const ReactNativeCore: ReactNativeCoreType = NativeModules.ReactNativeCore;
 
 /**
- * Checks whether location permission is granted.
+ * Checks whether background location permission is granted.
  * @return {Promise<boolean>} A promise that resolves to a boolean value indicating whether or not the permission is granted.
  */
 export const isLocationPermissionGranted = (): Promise<boolean> => {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     if (Platform.OS !== 'android') {
       reject(
         new OkHiException({
@@ -39,16 +39,10 @@ export const isLocationPermissionGranted = (): Promise<boolean> => {
         })
       );
     }
-    ReactNativeCore.isLocationPermissionGranted()
-      .then(resolve)
-      .catch((error) =>
-        reject(
-          new OkHiException({
-            code: error.code,
-            message: error.message,
-          })
-        )
-      );
+    const hasPermission = await PermissionsAndroid.checkPermission(
+      PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION
+    );
+    resolve(hasPermission);
   });
 };
 
@@ -179,7 +173,7 @@ export const requestEnableGooglePlayServices = (): Promise<boolean> => {
 };
 
 /**
- * Requests location permission from the user.
+ * Requests background location permission from the user.
  * @return {Promise<boolean>} A promise that resolves to a boolean value indicating whether or not the the permission is granted.
  */
 export const requestLocationPermission = (): Promise<boolean> => {
