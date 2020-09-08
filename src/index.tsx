@@ -185,7 +185,7 @@ export const requestEnableGooglePlayServices = (): Promise<boolean> => {
 
 /**
  * Requests location permission from the user.
- * Uses a rationale object that is used to check with the OS whether it is necessary to show a dialog explaining why the permission is needed.
+ * Uses a rationale object to check with the OS whether it is necessary to show a dialog explaining why the permission is needed.
  * See: https://reactnative.dev/docs/permissionsandroid#request
  * @return {Promise<boolean>} A promise that resolves to a boolean value indicating whether or not the the permission is granted.
  */
