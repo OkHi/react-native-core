@@ -1,9 +1,4 @@
-import {
-  NativeModules,
-  Platform,
-  PermissionsAndroid,
-  Rationale,
-} from 'react-native';
+import { NativeModules, Platform, PermissionsAndroid } from 'react-native';
 import { OkHiException } from './OkHiException';
 
 export * from './types';
@@ -31,11 +26,11 @@ type ReactNativeCoreType = {
 const ReactNativeCore: ReactNativeCoreType = NativeModules.ReactNativeCore;
 
 /**
- * Checks whether location permission is granted.
+ * Checks whether background location permission is granted.
  * @return {Promise<boolean>} A promise that resolves to a boolean value indicating whether or not the permission is granted.
  */
 export const isLocationPermissionGranted = (): Promise<boolean> => {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     if (Platform.OS !== 'android') {
       reject(
         new OkHiException({
@@ -44,16 +39,10 @@ export const isLocationPermissionGranted = (): Promise<boolean> => {
         })
       );
     }
-    ReactNativeCore.isLocationPermissionGranted()
-      .then(resolve)
-      .catch((error) =>
-        reject(
-          new OkHiException({
-            code: error.code,
-            message: error.message,
-          })
-        )
-      );
+    const hasPermission = await PermissionsAndroid.checkPermission(
+      PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION
+    );
+    resolve(hasPermission);
   });
 };
 
@@ -184,14 +173,10 @@ export const requestEnableGooglePlayServices = (): Promise<boolean> => {
 };
 
 /**
- * Requests location permission from the user.
- * Uses a rationale object to check with the OS whether it is necessary to show a dialog explaining why the permission is needed.
- * See: https://reactnative.dev/docs/permissionsandroid#request
+ * Requests background location permission from the user.
  * @return {Promise<boolean>} A promise that resolves to a boolean value indicating whether or not the the permission is granted.
  */
-export const requestLocationPermission = (
-  rationale: Rationale
-): Promise<boolean> => {
+export const requestLocationPermission = (): Promise<boolean> => {
   return new Promise(async (resolve, reject) => {
     if (Platform.OS !== 'android') {
       reject(
@@ -201,14 +186,23 @@ export const requestLocationPermission = (
         })
       );
     }
-    const hasPermission = await ReactNativeCore.isLocationPermissionGranted();
+
+    const hasPermission = await PermissionsAndroid.checkPermission(
+      PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION
+    );
+
     if (hasPermission) {
       return resolve(hasPermission);
     }
-    const granted = await PermissionsAndroid.request(
+
+    const status: any = await PermissionsAndroid.requestMultiple([
       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-      rationale
+      PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
+      PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION,
+    ]);
+
+    resolve(
+      status['android.permission.ACCESS_BACKGROUND_LOCATION'] === 'granted'
     );
-    return resolve(granted === PermissionsAndroid.RESULTS.GRANTED);
   });
 };

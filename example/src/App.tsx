@@ -47,13 +47,7 @@ async function checkPermissions() {
   }
 
   if (!(await isLocationPermissionGranted())) {
-    const hasPermission = await requestLocationPermission({
-      buttonPositive: 'GRANT',
-      buttonNegative: 'DENY',
-      buttonNeutral: 'CANCEL',
-      title: 'Please grant permissions',
-      message: 'We need location permissions',
-    });
+    const hasPermission = await requestLocationPermission();
     console.log('hasPermission', hasPermission);
   }
 
