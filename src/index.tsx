@@ -39,7 +39,7 @@ export const isLocationPermissionGranted = (): Promise<boolean> => {
         })
       );
     }
-    const hasPermission = await PermissionsAndroid.checkPermission(
+    const hasPermission = await PermissionsAndroid.check(
       PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION
     );
     resolve(hasPermission);
@@ -187,7 +187,7 @@ export const requestLocationPermission = (): Promise<boolean> => {
       );
     }
 
-    const hasPermission = await PermissionsAndroid.checkPermission(
+    const hasPermission = await PermissionsAndroid.check(
       PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION
     );
 
