@@ -4,6 +4,9 @@ import type { OkHiAccessScope } from './types';
 import { OkHiMode } from './OkHiMode';
 import { OkHiException } from './OkHiException';
 
+/**
+ * @ignore
+ */
 export class OkHiCore {
   private readonly API_VERSION = 'v5';
   private readonly ANONYMOUS_SIGN_IN_ENDPOINT = '/auth/anonymous-signin';
