@@ -10,6 +10,8 @@ import {
   requestEnableGooglePlayServices,
   requestEnableLocationServices,
   requestLocationPermission,
+  isBackgroundLocationPermissionGranted,
+  requestBackgroundLocationPermission,
 } from '@okhi/react-native-core';
 import secret, { Core } from './secret';
 
@@ -54,6 +56,11 @@ async function checkPermissions() {
   if (!(await isLocationServicesEnabled())) {
     const hasLocationServices = await requestEnableLocationServices();
     console.log('hasLocationServices', hasLocationServices);
+  }
+
+  if (!(await isBackgroundLocationPermissionGranted())) {
+    const hasLocationServices = await requestBackgroundLocationPermission();
+    console.log('hasBackgroundLocationServices', hasLocationServices);
   }
   console.log('DONE');
 }
