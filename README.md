@@ -21,6 +21,8 @@ import {
   requestEnableGooglePlayServices,
   requestEnableLocationServices,
   requestLocationPermission,
+  isBackgroundLocationPermissionGranted,
+  requestBackgroundLocationPermission,
 } from '@okhi/react-native-core';
 
 // define context first
@@ -48,18 +50,15 @@ async function checkPermissions() {
   }
 
   if (!(await isLocationPermissionGranted())) {
-    await requestLocationPermission({
-      buttonPositive: 'GRANT',
-      buttonNegative: 'DENY',
-      buttonNeutral: 'CANCEL',
-      title: 'Location permission required',
-      message:
-        'OkHi needs your location permission to create and cerify your address',
-    }); // resolves true | false
+    await requestLocationPermission(); // resolves true | false
   }
 
   if (!(await isLocationServicesEnabled())) {
     await requestEnableLocationServices(); // resolves true | false
+  }
+
+  if (!(await isBackgroundLocationPermissionGranted())) {
+    await requestBackgroundLocationPermission(); // resolves true | false
   }
 }
 ```
