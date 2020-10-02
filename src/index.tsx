@@ -18,6 +18,7 @@ type ReactNativeCoreType = {
   openLocationServicesSettings(): Promise<void>;
   requestEnableLocationServices(): Promise<boolean>;
   requestEnableGooglePlayServices(): Promise<boolean>;
+  getSDKVersion(): Promise<number>;
 };
 
 /**
@@ -26,7 +27,7 @@ type ReactNativeCoreType = {
 const ReactNativeCore: ReactNativeCoreType = NativeModules.ReactNativeCore;
 
 /**
- * Checks whether background location permission is granted.
+ * Checks whether foreground location permission is granted.
  * @return {Promise<boolean>} A promise that resolves to a boolean value indicating whether or not the permission is granted.
  */
 export const isLocationPermissionGranted = (): Promise<boolean> => {
@@ -40,7 +41,7 @@ export const isLocationPermissionGranted = (): Promise<boolean> => {
       );
     }
     const hasPermission = await PermissionsAndroid.check(
-      PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
     );
     resolve(hasPermission);
   });
@@ -173,7 +174,7 @@ export const requestEnableGooglePlayServices = (): Promise<boolean> => {
 };
 
 /**
- * Requests background location permission from the user.
+ * Requests foreground location permission from the user.
  * @return {Promise<boolean>} A promise that resolves to a boolean value indicating whether or not the the permission is granted.
  */
 export const requestLocationPermission = (): Promise<boolean> => {
@@ -186,23 +187,74 @@ export const requestLocationPermission = (): Promise<boolean> => {
         })
       );
     }
-
-    const hasPermission = await PermissionsAndroid.check(
-      PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION
-    );
-
+    const hasPermission = await isLocationPermissionGranted();
     if (hasPermission) {
       return resolve(hasPermission);
     }
+    const status: any = await PermissionsAndroid.requestMultiple([
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
+    ]);
+    resolve(status['android.permission.ACCESS_FINE_LOCATION'] === 'granted');
+  });
+};
 
+/**
+ * Checks whether background location permission is granted.
+ * @return {Promise<boolean>} A promise that resolves to a boolean value indicating whether or not the permission is granted.
+ */
+export const isBackgroundLocationPermissionGranted = (): Promise<boolean> => {
+  return new Promise(async (resolve, reject) => {
+    if (Platform.OS !== 'android') {
+      reject(
+        new OkHiException({
+          code: OkHiException.UNSUPPORTED_PLATFORM_CODE,
+          message: OkHiException.UNSUPPORTED_PLATFORM_MESSAGE,
+        })
+      );
+    }
+    const sdkVersion = await ReactNativeCore.getSDKVersion();
+    if (sdkVersion < 29) {
+      resolve(await isLocationPermissionGranted());
+    } else {
+      const hasPermission = await PermissionsAndroid.check(
+        PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION
+      );
+      resolve(hasPermission);
+    }
+  });
+};
+
+/**
+ * Requests background location permission from the user.
+ * @return {Promise<boolean>} A promise that resolves to a boolean value indicating whether or not the the permission is granted.
+ */
+export const requestBackgroundLocationPermission = (): Promise<boolean> => {
+  return new Promise(async (resolve, reject) => {
+    if (Platform.OS !== 'android') {
+      reject(
+        new OkHiException({
+          code: OkHiException.UNSUPPORTED_PLATFORM_CODE,
+          message: OkHiException.UNSUPPORTED_PLATFORM_MESSAGE,
+        })
+      );
+    }
+    const hasPermission = await isBackgroundLocationPermissionGranted();
+    if (hasPermission) {
+      return resolve(hasPermission);
+    }
     const status: any = await PermissionsAndroid.requestMultiple([
       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
       PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
       PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION,
     ]);
-
-    resolve(
-      status['android.permission.ACCESS_BACKGROUND_LOCATION'] === 'granted'
-    );
+    const sdkVersion = await ReactNativeCore.getSDKVersion();
+    if (sdkVersion < 29) {
+      resolve(status['android.permission.ACCESS_FINE_LOCATION'] === 'granted');
+    } else {
+      resolve(
+        status['android.permission.ACCESS_BACKGROUND_LOCATION'] === 'granted'
+      );
+    }
   });
 };
