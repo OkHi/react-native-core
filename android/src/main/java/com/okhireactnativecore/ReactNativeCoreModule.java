@@ -106,4 +106,9 @@ public class ReactNativeCoreModule extends ReactContextBaseJavaModule {
       okHi.requestEnableGooglePlayServices(new RequestHandler(promise));
     }
   }
+
+  @ReactMethod
+  public void getSDKVersion (Promise promise) {
+    promise.resolve(android.os.Build.VERSION.SDK_INT);
+  }
 }
