@@ -7,15 +7,14 @@ import { OkHiContext } from './OkHiContext';
  */
 export class OkHiAuth {
   private context: OkHiContext;
-
+  private credentials: { branchId: string; clientKey: string };
   /**
    * @param credentials Your OkHi issued pair of credentials.
    * @param credentials.branchId Your OkHi issued branchId.
    * @param credentials.clientKey Your OkHi issued clientKey.
    */
-  constructor(
-    private readonly credentials: { branchId: string; clientKey: string }
-  ) {
+  constructor(credentials: { branchId: string; clientKey: string }) {
+    this.credentials = credentials;
     this.context = OkHiContext.withDefaultContext();
   }
 
