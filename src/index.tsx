@@ -216,6 +216,8 @@ export const isBackgroundLocationPermissionGranted = (): Promise<boolean> => {
     const sdkVersion = await ReactNativeCore.getSDKVersion();
     if (sdkVersion < 29) {
       resolve(await isLocationPermissionGranted());
+    } else if (sdkVersion < 23) {
+      resolve(true);
     } else {
       const hasPermission = await PermissionsAndroid.check(
         PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION
@@ -251,6 +253,8 @@ export const requestBackgroundLocationPermission = (): Promise<boolean> => {
     const sdkVersion = await ReactNativeCore.getSDKVersion();
     if (sdkVersion < 29) {
       resolve(status['android.permission.ACCESS_FINE_LOCATION'] === 'granted');
+    } else if (sdkVersion < 23) {
+      resolve(true);
     } else {
       resolve(
         status['android.permission.ACCESS_BACKGROUND_LOCATION'] === 'granted'
