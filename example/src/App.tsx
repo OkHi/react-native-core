@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { StyleSheet, View, Button } from 'react-native';
 import {
-  OkHiContext,
-  OkHiMode,
-  OkHiAuth,
+  // OkHiContext,
+  // OkHiMode,
+  // OkHiAuth,
   isGooglePlayServicesAvailable,
   isLocationPermissionGranted,
   isLocationServicesEnabled,
@@ -13,30 +13,30 @@ import {
   isBackgroundLocationPermissionGranted,
   requestBackgroundLocationPermission,
 } from '@okhi/react-native-core';
-import secret, { Core } from './secret';
+// import secret, { Core } from './secret';
 
 function signIn() {
   // define context first
-  const context = new OkHiContext({
-    mode: OkHiMode.SANDBOX,
-    app: {
-      name: 'My Demo app',
-      version: '1.0.0',
-      build: 1,
-    },
-  });
+  // const context = new OkHiContext({
+  //   mode: OkHiMode.SANDBOX,
+  //   app: {
+  //     name: 'My Demo app',
+  //     version: '1.0.0',
+  //     build: 1,
+  //   },
+  // });
   // create auth with or without context
-  const auth = OkHiAuth.withContext(
-    {
-      branchId: secret.branchId,
-      clientKey: secret.clientKey,
-    },
-    context
-  );
-  const core = new Core(auth);
+  // const auth = OkHiAuth.withContext(
+  //   {
+  //     branchId: secret.branchId,
+  //     clientKey: secret.clientKey,
+  //   },
+  //   context
+  // );
+  // const core = new Core(auth);
   try {
-    core.signInWithPhone(secret.phone).then(console.log).catch(console.log);
-    core.signInWithUserId(secret.userId).then(console.log).catch(console.log);
+    // core.signInWithPhone(secret.phone).then(console.log).catch(console.log);
+    // core.signInWithUserId(secret.userId).then(console.log).catch(console.log);
   } catch (error) {
     console.log(error);
   }
