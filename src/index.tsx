@@ -1,6 +1,35 @@
+import { NativeModules } from 'react-native';
 import { Platform, PermissionsAndroid } from 'react-native';
-import { ReactNativeCore } from './OkHiCoreNative';
 import { OkHiException } from './OkHiException';
+
+/**
+ * @ignore
+ */
+export type ReactNativeCoreType = {
+  isLocationPermissionGranted(): Promise<boolean>;
+  isLocationServicesEnabled(): Promise<boolean>;
+  isGooglePlayServicesAvailable(): Promise<boolean>;
+  openLocationServicesSettings(): Promise<void>;
+  requestEnableLocationServices(): Promise<boolean>;
+  requestEnableGooglePlayServices(): Promise<boolean>;
+  getSDKVersion(): Promise<number>;
+  captureException(code: string, message: string): void;
+  setExceptionUser(
+    phone: string,
+    firstName: string,
+    lastName: string,
+    userId: string
+  ): void;
+  setExceptionUser(phone: string, firstName: string, lastName: string): void;
+  setExceptionUser(phone: string): void;
+  setExceptionEnv(env: string): void;
+};
+
+/**
+ * @ignore
+ */
+export const ReactNativeCore: ReactNativeCoreType =
+  NativeModules.ReactNativeCore;
 
 export * from './types';
 export * from './OkHiAuth';
