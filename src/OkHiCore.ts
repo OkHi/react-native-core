@@ -3,6 +3,7 @@ import type { OkHiAuth } from './OkHiAuth';
 import type { OkHiAccessScope } from './types';
 import { OkHiMode } from './OkHiMode';
 import { OkHiException } from './OkHiException';
+import { ReactNativeCore } from './OkHiCoreNative';
 
 /**
  * @ignore
@@ -34,6 +35,7 @@ export class OkHiCore {
     phone: string,
     scopes: Array<OkHiAccessScope>
   ) {
+    ReactNativeCore.setExceptionUser(phone);
     return this.anonymousSignIn({
       scopes,
       phone,
@@ -67,11 +69,19 @@ export class OkHiCore {
 
   private parseRequestError(error: any) {
     if (!error.response) {
+      ReactNativeCore.captureException(
+        OkHiException.NETWORK_ERROR_CODE,
+        OkHiException.NETWORK_ERROR_MESSAGE
+      );
       return new OkHiException({
         code: OkHiException.NETWORK_ERROR_CODE,
         message: OkHiException.NETWORK_ERROR_MESSAGE,
       });
     }
+    ReactNativeCore.captureException(
+      `Status: ${error.response.status}`,
+      JSON.stringify(error.response.body)
+    );
     switch (error.response.status) {
       case 400:
         return new OkHiException({
