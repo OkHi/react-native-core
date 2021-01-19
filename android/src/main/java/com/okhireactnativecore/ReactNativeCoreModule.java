@@ -124,10 +124,7 @@ public class ReactNativeCoreModule extends ReactContextBaseJavaModule {
     if (phone.isEmpty()) {
       return;
     }
-    if (!firstName.isEmpty() && !lastName.isEmpty() && !userId.isEmpty()) {
-      OkHiUser user = new OkHiUser.Builder(phone).withFirstName(firstName).withLastName(lastName).build();
-      OkHiCoreUtil.setUserException(user);
-    } else if (!userId.isEmpty()) {
+    if (!userId.isEmpty()) {
       OkHiCoreUtil.setUserException(userId, phone);
     } else {
       OkHiCoreUtil.setUserException(phone);
