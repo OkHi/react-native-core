@@ -8,7 +8,6 @@ export * from './OkHiContext';
 export * from './OkHiException';
 export * from './OkHiMode';
 export * from './OkHiCore';
-export * from './OkHiCoreNative';
 
 /**
  * Checks whether foreground location permission is granted.
@@ -245,4 +244,31 @@ export const requestBackgroundLocationPermission = (): Promise<boolean> => {
       );
     }
   });
+};
+
+export const ErrorTracking = {
+  captureException(code: string, message: string) {
+    ReactNativeCore.captureException(code, message);
+  },
+  setExceptionUser(user: {
+    phone: string;
+    firstName?: string;
+    lastName?: string;
+    id?: string;
+  }) {
+    const { phone, firstName, lastName, id } = user;
+    if (id) {
+      ReactNativeCore.setExceptionUser(
+        phone,
+        firstName || '',
+        lastName || '',
+        id
+      );
+    } else {
+      ReactNativeCore.setExceptionUser(phone, firstName || '', lastName || '');
+    }
+  },
+  setExceptionEnv(env: string) {
+    ReactNativeCore.setExceptionEnv(env);
+  },
 };
