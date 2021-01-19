@@ -3,7 +3,7 @@ import type { OkHiAuth } from './OkHiAuth';
 import type { OkHiAccessScope } from './types';
 import { OkHiMode } from './OkHiMode';
 import { OkHiException } from './OkHiException';
-import { ReactNativeCore } from './OkHiCoreNative';
+import { ErrorTracking } from './';
 
 /**
  * @ignore
@@ -29,14 +29,14 @@ export class OkHiCore {
     } else {
       this.URL = this.SANDBOX_BASE_URL;
     }
-    ReactNativeCore.setExceptionEnv(auth.getContext().getMode());
+    ErrorTracking.setExceptionEnv(auth.getContext().getMode());
   }
 
   protected anonymousSignInWithPhoneNumber(
     phone: string,
     scopes: Array<OkHiAccessScope>
   ) {
-    ReactNativeCore.setExceptionUser(phone);
+    ErrorTracking.setExceptionUser({ phone });
     return this.anonymousSignIn({
       scopes,
       phone,
@@ -70,7 +70,7 @@ export class OkHiCore {
 
   private parseRequestError(error: any) {
     if (!error.response) {
-      ReactNativeCore.captureException(
+      ErrorTracking.captureException(
         OkHiException.NETWORK_ERROR_CODE,
         OkHiException.NETWORK_ERROR_MESSAGE
       );
@@ -79,7 +79,7 @@ export class OkHiCore {
         message: OkHiException.NETWORK_ERROR_MESSAGE,
       });
     }
-    ReactNativeCore.captureException(
+    ErrorTracking.captureException(
       `Status: ${error.response.status}`,
       JSON.stringify(error.response.body)
     );
