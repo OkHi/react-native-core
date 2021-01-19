@@ -8,6 +8,7 @@ export * from './OkHiContext';
 export * from './OkHiException';
 export * from './OkHiMode';
 export * from './OkHiCore';
+export * from './OkHiCoreNative';
 
 /**
  * Checks whether foreground location permission is granted.
