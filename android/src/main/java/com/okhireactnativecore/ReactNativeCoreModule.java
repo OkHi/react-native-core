@@ -13,7 +13,9 @@ import com.facebook.react.bridge.ReactMethod;
 
 import io.okhi.android_core.OkHi;
 import io.okhi.android_core.interfaces.OkHiRequestHandler;
+import io.okhi.android_core.models.OkHiCoreUtil;
 import io.okhi.android_core.models.OkHiException;
+import io.okhi.android_core.models.OkHiUser;
 
 public class ReactNativeCoreModule extends ReactContextBaseJavaModule {
 
@@ -110,5 +112,27 @@ public class ReactNativeCoreModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void getSDKVersion (Promise promise) {
     promise.resolve(android.os.Build.VERSION.SDK_INT);
+  }
+
+  @ReactMethod
+  public void captureException(String code, String message) {
+    OkHiCoreUtil.captureException(new OkHiException(code, message));
+  }
+
+  @ReactMethod
+  public void setExceptionUser(String phone, String firstName, String lastName, String userId) {
+    OkHiUser user = new OkHiUser.Builder(phone).withFirstName(firstName).withLastName(lastName).withOkHiUserId(userId).build();
+    OkHiCoreUtil.setUserException(user);
+  }
+
+  @ReactMethod
+  public void setExceptionUser(String phone, String firstName, String lastName) {
+    OkHiUser user = new OkHiUser.Builder(phone).withFirstName(firstName).withLastName(lastName).build();
+    OkHiCoreUtil.setUserException(user);
+  }
+
+  @ReactMethod
+  public void setExceptionUser(String phone) {
+    OkHiCoreUtil.setUserException(phone);
   }
 }
