@@ -133,5 +133,5 @@ dependencies {
   // noinspection GradleDynamicVersion
   api 'com.facebook.react:react-native:+'
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-  implementation 'com.github.okhi:android-core:712932bfaad8ba9564858ca1acd32f465231b7ba'
+  implementation 'com.github.okhi:android-core:9292ef5573fc25601698b2210ddaf2d9a71b8aa7'
 }
