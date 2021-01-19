@@ -121,19 +121,17 @@ public class ReactNativeCoreModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void setExceptionUser(String phone, String firstName, String lastName, String userId) {
-    OkHiUser user = new OkHiUser.Builder(phone).withFirstName(firstName).withLastName(lastName).withOkHiUserId(userId).build();
-    OkHiCoreUtil.setUserException(user);
-  }
-
-  @ReactMethod
-  public void setExceptionUser(String phone, String firstName, String lastName) {
-    OkHiUser user = new OkHiUser.Builder(phone).withFirstName(firstName).withLastName(lastName).build();
-    OkHiCoreUtil.setUserException(user);
-  }
-
-  @ReactMethod
-  public void setExceptionUser(String phone) {
-    OkHiCoreUtil.setUserException(phone);
+    if (phone.isEmpty()) {
+      return;
+    }
+    if (!firstName.isEmpty() && !lastName.isEmpty() && !userId.isEmpty()) {
+      OkHiUser user = new OkHiUser.Builder(phone).withFirstName(firstName).withLastName(lastName).build();
+      OkHiCoreUtil.setUserException(user);
+    } else if (!userId.isEmpty()) {
+      OkHiCoreUtil.setUserException(userId, phone);
+    } else {
+      OkHiCoreUtil.setUserException(phone);
+    }
   }
 
   @ReactMethod
