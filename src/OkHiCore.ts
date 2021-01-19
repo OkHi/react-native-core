@@ -29,6 +29,7 @@ export class OkHiCore {
     } else {
       this.URL = this.SANDBOX_BASE_URL;
     }
+    ReactNativeCore.setExceptionEnv(auth.getContext().getMode());
   }
 
   protected anonymousSignInWithPhoneNumber(
