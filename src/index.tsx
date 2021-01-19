@@ -16,12 +16,10 @@ export type ReactNativeCoreType = {
   captureException(code: string, message: string): void;
   setExceptionUser(
     phone: string,
-    firstName: string,
-    lastName: string,
-    userId: string
+    firstName?: string,
+    lastName?: string,
+    userId?: string
   ): void;
-  setExceptionUser(phone: string, firstName: string, lastName: string): void;
-  setExceptionUser(phone: string): void;
   setExceptionEnv(env: string): void;
 };
 
@@ -286,16 +284,12 @@ export const ErrorTracking = {
     id?: string;
   }) {
     const { phone, firstName, lastName, id } = user;
-    if (id) {
-      ReactNativeCore.setExceptionUser(
-        phone,
-        firstName || '',
-        lastName || '',
-        id
-      );
-    } else {
-      ReactNativeCore.setExceptionUser(phone, firstName || '', lastName || '');
-    }
+    ReactNativeCore.setExceptionUser(
+      phone,
+      firstName || '',
+      lastName || '',
+      id || ''
+    );
   },
   setExceptionEnv(env: string) {
     ReactNativeCore.setExceptionEnv(env);
