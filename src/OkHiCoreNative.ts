@@ -20,6 +20,7 @@ export type ReactNativeCoreType = {
   ): void;
   setExceptionUser(phone: string, firstName: string, lastName: string): void;
   setExceptionUser(phone: string): void;
+  setExceptionEnv(env: string): void;
 };
 
 /**
