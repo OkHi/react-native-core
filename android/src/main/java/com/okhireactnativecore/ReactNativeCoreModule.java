@@ -135,4 +135,9 @@ public class ReactNativeCoreModule extends ReactContextBaseJavaModule {
   public void setExceptionUser(String phone) {
     OkHiCoreUtil.setUserException(phone);
   }
+
+  @ReactMethod
+  public void setExceptionEnv(String env) {
+    OkHiCoreUtil.setEnvironment(getReactApplicationContext(), env);
+  }
 }
