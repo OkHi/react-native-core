@@ -1,4 +1,5 @@
-import { NativeModules, Platform, PermissionsAndroid } from 'react-native';
+import { Platform, PermissionsAndroid } from 'react-native';
+import { ReactNativeCore } from './OkHiCoreNative';
 import { OkHiException } from './OkHiException';
 
 export * from './types';
@@ -7,24 +8,6 @@ export * from './OkHiContext';
 export * from './OkHiException';
 export * from './OkHiMode';
 export * from './OkHiCore';
-
-/**
- * @ignore
- */
-type ReactNativeCoreType = {
-  isLocationPermissionGranted(): Promise<boolean>;
-  isLocationServicesEnabled(): Promise<boolean>;
-  isGooglePlayServicesAvailable(): Promise<boolean>;
-  openLocationServicesSettings(): Promise<void>;
-  requestEnableLocationServices(): Promise<boolean>;
-  requestEnableGooglePlayServices(): Promise<boolean>;
-  getSDKVersion(): Promise<number>;
-};
-
-/**
- * @ignore
- */
-const ReactNativeCore: ReactNativeCoreType = NativeModules.ReactNativeCore;
 
 /**
  * Checks whether foreground location permission is granted.
