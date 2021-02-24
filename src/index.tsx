@@ -284,14 +284,18 @@ export const ErrorTracking = {
     id?: string;
   }) {
     const { phone, firstName, lastName, id } = user;
-    ReactNativeCore.setExceptionUser(
-      phone,
-      firstName || '',
-      lastName || '',
-      id || ''
-    );
+    if (Platform.OS === 'android') {
+      ReactNativeCore.setExceptionUser(
+        phone,
+        firstName || '',
+        lastName || '',
+        id || ''
+      );
+    }
   },
   setExceptionEnv(env: string) {
-    ReactNativeCore.setExceptionEnv(env);
+    if (Platform.OS === 'android') {
+      ReactNativeCore.setExceptionEnv(env);
+    }
   },
 };
