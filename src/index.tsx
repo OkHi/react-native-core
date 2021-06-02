@@ -2,6 +2,10 @@ import { NativeModules } from 'react-native';
 import { Platform, PermissionsAndroid } from 'react-native';
 import { OkHiException } from './OkHiException';
 
+export * from './types';
+export * from './OkHiException';
+export * from './OkHiCore';
+
 /**
  * @ignore
  */
@@ -30,8 +34,6 @@ export const ReactNativeCore: ReactNativeCoreType =
   NativeModules.ReactNativeCore;
 
 export * from './types';
-export * from './OkHiAuth';
-export * from './OkHiContext';
 export * from './OkHiException';
 export * from './OkHiMode';
 export * from './OkHiCore';
