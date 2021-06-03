@@ -1,6 +1,6 @@
 import { NativeModules } from 'react-native';
 import axios from 'axios';
-import type { OkHiAccessScope } from './types';
+import type { ApplicationConfiguration, OkHiAccessScope } from './types';
 import { OkHiMode } from './OkHiMode';
 import { OkHiException } from './OkHiException';
 import { ErrorTracking } from './';
@@ -11,26 +11,6 @@ import { ErrorTracking } from './';
 type ReactNativeCoreType = {
   getApplicationConfiguration(): Promise<string>;
 };
-
-/**
- * @ignore
- */
-
-interface ApplicationConfiguration {
-  auth: {
-    accessToken: string;
-  };
-  context: {
-    platform: 'react-native';
-    developer: 'okhi' | 'external';
-    mode: 'dev' | 'sandbox' | 'prod';
-  };
-  app: {
-    name: string;
-    version: string;
-    versionCode: number;
-  };
-}
 
 const ReactNativeCore: ReactNativeCoreType = NativeModules.ReactNativeCore;
 
