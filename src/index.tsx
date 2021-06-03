@@ -5,6 +5,7 @@ import { OkHiException } from './OkHiException';
 export * from './types';
 export * from './OkHiException';
 export * from './OkHiCore';
+export * from './OkHiMode';
 
 /**
  * @ignore
