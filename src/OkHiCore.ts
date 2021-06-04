@@ -1,8 +1,17 @@
+import { NativeModules } from 'react-native';
 import axios from 'axios';
-import type { OkHiAuth } from './OkHiAuth';
-import type { OkHiAccessScope } from './types';
+import type { ApplicationConfiguration, OkHiAccessScope } from './types';
 import { OkHiMode } from './OkHiMode';
 import { OkHiException } from './OkHiException';
+
+/**
+ * @ignore
+ */
+type ReactNativeCoreType = {
+  getApplicationConfiguration(): Promise<string>;
+};
+
+const ReactNativeCore: ReactNativeCoreType = NativeModules.ReactNativeCore;
 
 /**
  * @ignore
@@ -18,16 +27,13 @@ export class OkHiCore {
     this.ANONYMOUS_SIGN_IN_ENDPOINT;
   private readonly PROD_BASE_URL =
     `https://api.okhi.io/${this.API_VERSION}` + this.ANONYMOUS_SIGN_IN_ENDPOINT;
-  private URL: string;
 
-  constructor(private readonly auth: OkHiAuth) {
-    if (auth.getContext().getMode() === 'dev') {
-      this.URL = this.DEV_BASE_URL;
-    } else if (auth.getContext().getMode() === OkHiMode.PROD) {
-      this.URL = this.PROD_BASE_URL;
-    } else {
-      this.URL = this.SANDBOX_BASE_URL;
-    }
+  protected getApplicationConfiguration(): Promise<ApplicationConfiguration> {
+    return new Promise((resolve, reject) => {
+      ReactNativeCore.getApplicationConfiguration()
+        .then((config) => resolve(JSON.parse(config)))
+        .catch(reject);
+    });
   }
 
   protected anonymousSignInWithPhoneNumber(
@@ -55,13 +61,26 @@ export class OkHiCore {
     [key: string]: any;
   }): Promise<string> {
     return new Promise(async (resolve, reject) => {
-      const headers = { Authorization: this.auth.getAccessToken() };
-      axios
-        .post<{ authorization_token: string }>(this.URL, payload, {
-          headers,
+      this.getApplicationConfiguration()
+        .then((applicationConfiguration) => {
+          const { auth, context } = applicationConfiguration;
+          let url = this.SANDBOX_BASE_URL;
+          if (context.mode === 'dev') {
+            url = this.DEV_BASE_URL;
+          } else if (context.mode === OkHiMode.PROD) {
+            url = this.PROD_BASE_URL;
+          } else {
+            url = this.SANDBOX_BASE_URL;
+          }
+          const headers = { Authorization: auth.accessToken };
+          axios
+            .post<{ authorization_token: string }>(url, payload, {
+              headers,
+            })
+            .then(({ data }) => resolve(data.authorization_token))
+            .catch((error) => reject(this.parseRequestError(error)));
         })
-        .then(({ data }) => resolve(data.authorization_token))
-        .catch((error) => reject(this.parseRequestError(error)));
+        .catch(reject);
     });
   }
 

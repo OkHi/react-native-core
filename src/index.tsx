@@ -2,11 +2,9 @@ import { NativeModules, Platform, PermissionsAndroid } from 'react-native';
 import { OkHiException } from './OkHiException';
 
 export * from './types';
-export * from './OkHiAuth';
-export * from './OkHiContext';
 export * from './OkHiException';
-export * from './OkHiMode';
 export * from './OkHiCore';
+export * from './OkHiMode';
 
 /**
  * @ignore

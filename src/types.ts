@@ -140,3 +140,23 @@ export interface OkHiError {
  * @ignore
  */
 export type OkHiAccessScope = 'verify' | 'address' | 'checkout' | 'profile';
+
+/**
+ * @ignore
+ */
+
+export interface ApplicationConfiguration {
+  auth: {
+    accessToken: string;
+  };
+  context: {
+    platform: 'react-native';
+    developer: 'okhi' | 'external';
+    mode: 'dev' | 'sandbox' | 'prod';
+  };
+  app: {
+    name: string;
+    version: string;
+    versionCode: number;
+  };
+}
