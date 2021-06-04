@@ -12,9 +12,6 @@ npm install @okhi/react-native-core
 
 ```js
 import {
-  OkHiContext,
-  OkHiMode,
-  OkHiAuth,
   isGooglePlayServicesAvailable,
   isLocationPermissionGranted,
   isLocationServicesEnabled,
@@ -24,25 +21,6 @@ import {
   isBackgroundLocationPermissionGranted,
   requestBackgroundLocationPermission,
 } from '@okhi/react-native-core';
-
-// define context first
-const context = new OkHiContext({
-  mode: OkHiMode.SANDBOX,
-  app: {
-    name: 'My Demo app',
-    version: '1.0.0',
-    build: 1,
-  },
-});
-
-// create auth with or without context. Use the auth object with either OkVerify or OkCollect libraries
-const auth = OkHiAuth.withContext(
-  {
-    branchId: '<my_branch_id>',
-    clientKey: '<my_clientKey_id>',
-  },
-  context
-);
 
 async function checkPermissions() {
   if (!(await isGooglePlayServicesAvailable())) {
