@@ -2781,9 +2781,6 @@ img {
 				<h2>Usage</h2>
 			</a>
 			<pre><code class="language-js"><span class="hljs-keyword">import</span> {
-  OkHiContext,
-  OkHiMode,
-  OkHiAuth,
   isGooglePlayServicesAvailable,
   isLocationPermissionGranted,
   isLocationServicesEnabled,
@@ -2793,25 +2790,6 @@ img {
   isBackgroundLocationPermissionGranted,
   requestBackgroundLocationPermission,
 } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@okhi/react-native-core&#x27;</span>;
-
-<span class="hljs-comment">// define context first</span>
-<span class="hljs-keyword">const</span> context = <span class="hljs-keyword">new</span> OkHiContext({
-  <span class="hljs-attr">mode</span>: OkHiMode.SANDBOX,
-  <span class="hljs-attr">app</span>: {
-    <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;My Demo app&#x27;</span>,
-    <span class="hljs-attr">version</span>: <span class="hljs-string">&#x27;1.0.0&#x27;</span>,
-    <span class="hljs-attr">build</span>: <span class="hljs-number">1</span>,
-  },
-});
-
-<span class="hljs-comment">// create auth with or without context. Use the auth object with either OkVerify or OkCollect libraries</span>
-<span class="hljs-keyword">const</span> auth = OkHiAuth.withContext(
-  {
-    <span class="hljs-attr">branchId</span>: <span class="hljs-string">&#x27;&lt;my_branch_id&gt;&#x27;</span>,
-    <span class="hljs-attr">clientKey</span>: <span class="hljs-string">&#x27;&lt;my_clientKey_id&gt;&#x27;</span>,
-  },
-  context
-);
 
 <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">checkPermissions</span>(<span class="hljs-params"></span>) </span>{
   <span class="hljs-keyword">if</span> (!(<span class="hljs-keyword">await</span> isGooglePlayServicesAvailable())) {
@@ -2900,7 +2878,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">Ok<wbr>HiMode<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>PROD<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>SANDBOX<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> = Object.freeze({SANDBOX: &#x27;sandbox&#x27;,PROD: &#x27;prod&#x27;,})</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/OkHi/react-native-core/blob/4791622/src/OkHiMode.ts#L4">src/OkHiMode.ts:4</a></li>
+						<li>Defined in <a href="https://github.com/OkHi/react-native-core/blob/38f4686/src/OkHiMode.ts#L4">src/OkHiMode.ts:4</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -2933,7 +2911,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/OkHi/react-native-core/blob/4791622/src/index.tsx#L204">src/index.tsx:204</a></li>
+								<li>Defined in <a href="https://github.com/OkHi/react-native-core/blob/38f4686/src/index.tsx#L204">src/index.tsx:204</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2956,7 +2934,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/OkHi/react-native-core/blob/4791622/src/index.tsx#L79">src/index.tsx:79</a></li>
+								<li>Defined in <a href="https://github.com/OkHi/react-native-core/blob/38f4686/src/index.tsx#L79">src/index.tsx:79</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2979,7 +2957,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/OkHi/react-native-core/blob/4791622/src/index.tsx#L31">src/index.tsx:31</a></li>
+								<li>Defined in <a href="https://github.com/OkHi/react-native-core/blob/38f4686/src/index.tsx#L31">src/index.tsx:31</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3002,7 +2980,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/OkHi/react-native-core/blob/4791622/src/index.tsx#L52">src/index.tsx:52</a></li>
+								<li>Defined in <a href="https://github.com/OkHi/react-native-core/blob/38f4686/src/index.tsx#L52">src/index.tsx:52</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3025,7 +3003,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/OkHi/react-native-core/blob/4791622/src/index.tsx#L106">src/index.tsx:106</a></li>
+								<li>Defined in <a href="https://github.com/OkHi/react-native-core/blob/38f4686/src/index.tsx#L106">src/index.tsx:106</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3047,7 +3025,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/OkHi/react-native-core/blob/4791622/src/index.tsx#L232">src/index.tsx:232</a></li>
+								<li>Defined in <a href="https://github.com/OkHi/react-native-core/blob/38f4686/src/index.tsx#L232">src/index.tsx:232</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3070,7 +3048,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/OkHi/react-native-core/blob/4791622/src/index.tsx#L151">src/index.tsx:151</a></li>
+								<li>Defined in <a href="https://github.com/OkHi/react-native-core/blob/38f4686/src/index.tsx#L151">src/index.tsx:151</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3093,7 +3071,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/OkHi/react-native-core/blob/4791622/src/index.tsx#L124">src/index.tsx:124</a></li>
+								<li>Defined in <a href="https://github.com/OkHi/react-native-core/blob/38f4686/src/index.tsx#L124">src/index.tsx:124</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3116,7 +3094,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/OkHi/react-native-core/blob/4791622/src/index.tsx#L178">src/index.tsx:178</a></li>
+								<li>Defined in <a href="https://github.com/OkHi/react-native-core/blob/38f4686/src/index.tsx#L178">src/index.tsx:178</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
