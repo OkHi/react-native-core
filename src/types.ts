@@ -126,6 +126,26 @@ export interface OkHiLocation {
    * A link to the location's gate photo.
    */
   photo?: string;
+
+  /**
+   * A user's country
+   */
+  country?: string;
+
+  /**
+   * A user's city
+   */
+  city?: string;
+
+  /**
+   * A user's state
+   */
+  state?: string;
+
+  /**
+   * A formatted location information
+   */
+  displayTitle?: string;
 }
 
 /**
